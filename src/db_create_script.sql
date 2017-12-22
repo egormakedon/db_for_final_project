@@ -80,6 +80,18 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
   `name` VARCHAR(50) NOT NULL COMMENT 'Имя абитуриента.',
   `second_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Второе имя абитуриента.',
   `statement` ENUM('Зачислен', 'Не зачислен', 'В процессе') NOT NULL DEFAULT 'В процессе' COMMENT 'Ведомасть.',
+  `russian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по русскому языку.',
+  `belorussian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по белорусскому языку.',
+  `physics` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по физике.',
+  `math` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по математике.',
+  `chemistry` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по химии.',
+  `biology` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по биологии.',
+  `foreign_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по иностранному языку.',
+  `history_of_belarus` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по истории Беларуси.',
+  `social_studies` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по обществоведению.',
+  `geography` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по географии.',
+  `history` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по истории.',
+  `certificate` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл аттестата.',
   PRIMARY KEY (`e_id`),
   UNIQUE INDEX `passport_id_UNIQUE` (`passport_id` ASC),
   INDEX `s_id_idx` (`s_id` ASC),
@@ -91,54 +103,6 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 COMMENT = 'Таблица об абитуриентах.';
-
-
--- -----------------------------------------------------
--- Table `selection_committee`.`subject`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `selection_committee`.`subject` (
-  `subject_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID предмета.',
-  `e_id` INT UNSIGNED NOT NULL COMMENT 'ID абитуриента.',
-  `russian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по русскому языку.',
-  `belorussian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по белорусскому языку',
-  `physics` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по физике.',
-  `math` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по математике',
-  `chemistry` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по химии.',
-  `biology` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по биологии.',
-  `foreign_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по иностранному языку.',
-  `history_of_belarus` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по истории Беларуси.',
-  `social_studies` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по обществоведению.',
-  `geography` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по географии.',
-  `history` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по истории.',
-  PRIMARY KEY (`subject_id`),
-  INDEX `e_id_idx` (`e_id` ASC),
-  UNIQUE INDEX `e_id_UNIQUE` (`e_id` ASC),
-  CONSTRAINT `e_id`
-    FOREIGN KEY (`e_id`)
-    REFERENCES `selection_committee`.`enrollee` (`e_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-COMMENT = 'Таблица о предметах.';
-
-
--- -----------------------------------------------------
--- Table `selection_committee`.`certificate`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `selection_committee`.`certificate` (
-  `c_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID аттестата.',
-  `e_id` INT UNSIGNED NOT NULL COMMENT 'ID абитуриента.',
-  `mark` TINYINT UNSIGNED NOT NULL COMMENT 'Балл.',
-  PRIMARY KEY (`c_id`),
-  INDEX `e_id_idx` (`e_id` ASC),
-  UNIQUE INDEX `e_id_UNIQUE` (`e_id` ASC),
-  CONSTRAINT `c_e_id`
-    FOREIGN KEY (`e_id`)
-    REFERENCES `selection_committee`.`enrollee` (`e_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-COMMENT = 'Таблица об аттестате.';
 
 
 -- -----------------------------------------------------
