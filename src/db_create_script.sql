@@ -110,14 +110,16 @@ COMMENT = 'Таблица об абитуриентах.';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `selection_committee`.`user` (
   `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID пользователя.',
+  `email` VARCHAR(64) NOT NULL COMMENT 'Почта',
   `login` VARCHAR(16) NOT NULL COMMENT 'Логин.',
-  `password` CHAR(32) NOT NULL COMMENT 'Пароль.',
+  `password` CHAR(40) NOT NULL COMMENT 'Пароль.',
   `type` ENUM('user', 'admin') NOT NULL DEFAULT 'user' COMMENT 'Тип пользователя.',
   `e_id` INT UNSIGNED NULL COMMENT 'ID абитуриента.',
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `login_UNIQUE` (`login` ASC),
   INDEX `e_id_idx` (`e_id` ASC),
   UNIQUE INDEX `e_id_UNIQUE` (`e_id` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   CONSTRAINT `user_e_id`
     FOREIGN KEY (`e_id`)
     REFERENCES `selection_committee`.`enrollee` (`e_id`)
@@ -130,3 +132,4 @@ COMMENT = 'Таблица о пользователях.';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
