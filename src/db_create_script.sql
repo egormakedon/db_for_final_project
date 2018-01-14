@@ -72,10 +72,9 @@ COMMENT = 'Таблица о специальностях.';
 -- Table `selection_committee`.`enrollee`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
-  `e_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ID абитуриента.',
-  `s_id` INT UNSIGNED NOT NULL COMMENT 'ID специальности.',
   `passport_id` VARCHAR(10) NOT NULL COMMENT 'ID пасспорта.',
   `country_domen` CHAR(2) NOT NULL COMMENT 'Домен страны.',
+  `s_id` INT UNSIGNED NOT NULL COMMENT 'ID специальности.',
   `surname` VARCHAR(50) NOT NULL COMMENT 'Фамилия абитуриента.',
   `name` VARCHAR(50) NOT NULL COMMENT 'Имя абитуриента.',
   `second_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Второе имя абитуриента.',
@@ -92,10 +91,8 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
   `geography` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по географии.',
   `history` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по истории.',
   `certificate` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл аттестата.',
-  PRIMARY KEY (`e_id`),
-  UNIQUE INDEX `passport_id_UNIQUE` (`passport_id` ASC),
   INDEX `s_id_idx` (`s_id` ASC),
-  UNIQUE INDEX `country_domen_UNIQUE` (`country_domen` ASC),
+  PRIMARY KEY (`passport_id`, `country_domen`),
   CONSTRAINT `s_id`
     FOREIGN KEY (`s_id`)
     REFERENCES `selection_committee`.`speciality` (`s_id`)
@@ -117,14 +114,8 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`user` (
   `e_id` INT UNSIGNED NULL COMMENT 'ID абитуриента.',
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `login_UNIQUE` (`username` ASC),
-  INDEX `e_id_idx` (`e_id` ASC),
   UNIQUE INDEX `e_id_UNIQUE` (`e_id` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  CONSTRAINT `user_e_id`
-    FOREIGN KEY (`e_id`)
-    REFERENCES `selection_committee`.`enrollee` (`e_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB
 COMMENT = 'Таблица о пользователях.';
 
@@ -132,4 +123,3 @@ COMMENT = 'Таблица о пользователях.';
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
