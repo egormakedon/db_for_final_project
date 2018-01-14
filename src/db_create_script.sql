@@ -74,10 +74,12 @@ COMMENT = 'Таблица о специальностях.';
 CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
   `passport_id` VARCHAR(10) NOT NULL COMMENT 'ID пасспорта.',
   `country_domen` CHAR(2) NOT NULL COMMENT 'Домен страны.',
+  `e_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Идентификатор.',
   `s_id` INT UNSIGNED NOT NULL COMMENT 'ID специальности.',
   `surname` VARCHAR(50) NOT NULL COMMENT 'Фамилия абитуриента.',
   `name` VARCHAR(50) NOT NULL COMMENT 'Имя абитуриента.',
   `second_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Второе имя абитуриента.',
+  `phone` VARCHAR(15) NOT NULL COMMENT 'Контактный телефон.',
   `statement` ENUM('Зачислен', 'Не зачислен', 'В процессе') NOT NULL DEFAULT 'В процессе' COMMENT 'Ведомасть.',
   `russian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по русскому языку.',
   `belorussian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по белорусскому языку.',
@@ -93,6 +95,7 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
   `certificate` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл аттестата.',
   INDEX `s_id_idx` (`s_id` ASC),
   PRIMARY KEY (`passport_id`, `country_domen`),
+  UNIQUE INDEX `e_id_UNIQUE` (`e_id` ASC),
   CONSTRAINT `s_id`
     FOREIGN KEY (`s_id`)
     REFERENCES `selection_committee`.`speciality` (`s_id`)
