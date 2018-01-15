@@ -114,11 +114,16 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`user` (
   `username` VARCHAR(16) NOT NULL COMMENT 'Имя пользователя.',
   `password` CHAR(40) NOT NULL COMMENT 'Пароль.',
   `type` ENUM('user', 'admin') NOT NULL DEFAULT 'user' COMMENT 'Тип пользователя.',
-  `e_id` INT UNSIGNED NULL COMMENT 'ID абитуриента.',
+  `e_id` INT UNSIGNED NULL DEFAULT NULL COMMENT 'ID абитуриента.',
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `login_UNIQUE` (`username` ASC),
   UNIQUE INDEX `e_id_UNIQUE` (`e_id` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  CONSTRAINT `fk_user_1`
+    FOREIGN KEY (`e_id`)
+    REFERENCES `selection_committee`.`enrollee` (`e_id`)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 COMMENT = 'Таблица о пользователях.';
 
