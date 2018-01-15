@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `selection_committee`.`enrollee` (
   `surname` VARCHAR(50) NOT NULL COMMENT 'Фамилия абитуриента.',
   `name` VARCHAR(50) NOT NULL COMMENT 'Имя абитуриента.',
   `second_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Второе имя абитуриента.',
-  `phone` VARCHAR(15) NOT NULL COMMENT 'Контактный телефон.',
+  `phone` CHAR(12) NOT NULL COMMENT 'Контактный телефон.',
   `statement` ENUM('Зачислен', 'Не зачислен', 'В процессе') NOT NULL DEFAULT 'В процессе' COMMENT 'Ведомасть.',
   `russian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по русскому языку.',
   `belorussian_lang` TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Балл по белорусскому языку.',
